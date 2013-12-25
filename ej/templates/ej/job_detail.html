@@ -1,0 +1,48 @@
+{% extends 'ej/base.html' %}
+{% block body %}
+<div class="container-fluid">
+    {% if job %}
+    <h2>{{ job.title }}</h2>
+    <div class="row-fluid">
+        <div class="span4">
+            <h4>Job information</h4>
+            <ul>
+                <li>Company: {{ job.company }}</li>
+                <li>Industry: {{ job.industry }}</li>
+                <li>Functions: {{ job.functions }}</li>
+                {% if job.city %}
+                <li>Location: {{ job.city }}, {{ job.country }}</li>
+                {% else %}
+                <li>Location: {{ job.country }}</li>
+                {% endif %}
+                <li>Experience: {{ job.experience }}</li>
+                <li>Description: {{ job.description }}</li>
+                <li>Requirements: {{ job.skills }}</li>
+            </ul>
+        </div>
+
+        <div class="span4">
+            <h4>Skills</h4>
+            <ul>
+                {% for skill in job.skillsLists.all %}
+                <li>{{ skill.skill }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="span4">
+            <h4>Related courses</h4>
+            {% if related_courses %}
+            <ul>
+                {% for course in related_courses %}
+                <li><a href="{% url 'ej:course_detail' course.id %}">{{ course.coursetitle }}</a></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <strong>Error retrieving the job.</strong>
+    {% endif %}
+</div>
+{% endblock %}

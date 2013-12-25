@@ -1,0 +1,9 @@
+{% if job_list %}
+<h2>Job matches</h2>
+<ul> 
+    {% for job in job_list %}
+    <li><a href="{% url 'ej:job_detail' job.id %}" courseid="{{ job.id }}">{{ job.title }}</a></li>
+    {% endfor %}
+    {% else %}
+    <strong>No jobs match your search criteria.</strong>
+    {% endif %}

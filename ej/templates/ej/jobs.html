@@ -1,0 +1,36 @@
+{% extends 'ej/base.html' %}
+{% load static %}
+{% block title %}Browse by jobs{% endblock %}
+{% block body %}
+<div class="container-fluid">
+    <h1 id="course-page-head">Search for a job</h1>
+    <div class="row-fluid">
+        <div class="span6">
+            <br/>
+            <form class="form-signin span8" method="post" id="course_search_form" action="{% url 'ej:courses' %}">
+                {% csrf_token %}
+                <input type="text" class="input-long search-query" size="50" name="query-job-title" id="query-job-title" placeholder="Job Title"/>
+                <br/>
+                <br/>
+                <input type="text" class="input-long search-query" size="50" name="query-job-company" id="query-job-company" placeholder="Company"/>
+                <br/>
+                <br/>
+                <input type="text" class="input-long search-query" size="50" name="query-job-country" id="query-job-country" placeholder="Country"/>
+                <br/>
+                <br/>
+                <input type="text" class="input-long search-query" size="50" name="query-job-city" id="query-job-city" placeholder="City"/>
+
+            </form>
+        </div>
+
+        <div class="span6">
+            <div id="job-suggestions">Suggested jobs.</div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}
+
+
