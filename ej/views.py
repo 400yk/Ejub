@@ -26,7 +26,7 @@ def get_course(max_courses = 0, starts_with = {}):
         for k,v in starts_with.iteritems():
             if v:
                 # Ignore case
-                filterargs['{0}__{1}'.format(k, 'istartswith')] = v
+                filterargs['{0}__{1}'.format(k, 'icontains')] = v
         
         if filterargs:
             course_list = CoursesList.objects.filter(**filterargs)
@@ -46,7 +46,7 @@ def course_search(request):
     starts_with = ''
     course_list = []
     
-    field_list = ['coursetitle', 'departmentcode']
+    field_list = ['coursetitle', 'departmentcode', 'courseuid']
     starts_with = {}
 
     if request.method == "GET":
@@ -56,7 +56,7 @@ def course_search(request):
         for field in field_list:
             starts_with[field] = request.POST['search_' + field]
 
-    course_list = get_course(8, starts_with)
+    course_list = get_course(15, starts_with)
     return render_to_response('ej/course_search.html', {'course_list': course_list}, context)
 
 # Once the user finds the course, retrieve the course detail
