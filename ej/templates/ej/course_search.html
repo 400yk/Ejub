@@ -5,5 +5,5 @@
     <li><a class="course-detail" href="{% url 'ej:course_detail' course.id %}" courseid="{{ course.id }}">{{ course.coursetitle }}</a></li>
     {% endfor %}
     {% else %}
-    <strong>No courses matches your search criteria.</strong>
+    <strong>No courses match your search criteria.</strong>
     {% endif %}

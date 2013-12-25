@@ -63,7 +63,17 @@ def course_search(request):
 def course_detail(request, course_id):
     context = RequestContext(request)
     course = {}
+    related_jobs = []
+    # The maximum amount of related jobs that can be shown
+    max_jobs = 15
     if course_id:
         course = CoursesList.objects.get(pk = course_id)
-        
-    return render_to_response('ej/course_detail.html', {'course': course}, context) 
+        for skill in course.skillsLists.all():
+            if len(related_jobs) <= max_jobs:
+                related_jobs += skill.jobslist_set.all()
+            else:
+                break
+        print related_jobs
+        if len(related_jobs) > max_jobs:
+            related_jobs = related_jobs[:max_jobs]
+    return render_to_response('ej/course_detail.html', {'course': course, 'related_jobs': related_jobs}, context) 

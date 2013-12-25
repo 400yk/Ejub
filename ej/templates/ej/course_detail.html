@@ -1,15 +1,40 @@
 {% extends 'ej/base.html' %}
 {% block body %}
 <div class="container-fluid">
-{% if course %}
-<h2>{{ course.coursetitle }}</h2>
-<ul>
-    <li>Department: {{ course.departmentcode }}</li>
-    <li>Course UID: {{ course.courseuid }}</li>
-    <li>Course Description: {{ course.coursedescription }}</li>
-</ul>
-{% else %}
-<strong>Error retrieving the course.</strong>
-{% endif %}
+    {% if course %}
+    <h2>{{ course.coursetitle }}</h2>
+    <div class="row-fluid">
+        <div class="span4">
+            <h4>Course information</h4>
+            <ul>
+                <li>Department: {{ course.departmentcode }}</li>
+                <li>Course UID: {{ course.courseuid }}</li>
+                <li>Course Description: {{ course.coursedescription }}</li>
+            </ul>
+        </div>
+
+        <div class="span4">
+            <h4>Skills</h4>
+            <ul>
+                {% for skill in course.skillsLists.all %}
+                <li>{{ skill.skill }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="span4">
+            <h4>Related jobs</h4>
+            {% if related_jobs %}
+            <ul>
+                {% for job in related_jobs %}
+                <li><a href="http://www.linkedin.com/jobs2/view/{{ job.job_id }}/">{{ job.title }}</a></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <strong>Error retrieving the course.</strong>
+    {% endif %}
 </div>
 {% endblock %}
