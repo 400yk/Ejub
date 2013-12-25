@@ -1,0 +1,9 @@
+{% if course_list %}
+<h2>Course matches</h2>
+<ul id="course-list">
+    {% for course in course_list %}
+    <li><a class="course-detail" href="{% url 'ej:course_detail' course.id %}" courseid="{{ course.id }}">{{ course.coursetitle }}</a></li>
+    {% endfor %}
+    {% else %}
+    <strong>No courses matches your search criteria.</strong>
+    {% endif %}

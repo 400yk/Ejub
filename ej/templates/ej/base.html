@@ -21,6 +21,11 @@
                     <a class="brand" href="{% url 'ej:home' %}">Ejub</a>
 
                     <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li><a href="{% url 'ej:courses' %}">Courses</a></li>
+                            <li><a href="{% url 'ej:skills' %}">Skills</a></li>
+                            <li><a href="{% url 'ej:jobs' %}">Jobs</a></li>
+                        </ul>
                         <ul class="nav pull-right">
                             <li><a href="www.google.com">Google</a></li>
                         </ul>
@@ -52,7 +57,7 @@
             <p>&copy; Ejub: from education to jobs. Powered by Django</p>
         </div>
         </footer>
-        <script type="text/javascript" src="{% static 'js/jquery-2.0.3.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/ej-ajax.js' %}"></script>
     </body>
 </html>

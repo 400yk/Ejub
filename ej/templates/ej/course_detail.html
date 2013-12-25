@@ -1,0 +1,15 @@
+{% extends 'ej/base.html' %}
+{% block body %}
+<div class="container-fluid">
+{% if course %}
+<h2>{{ course.coursetitle }}</h2>
+<ul>
+    <li>Department: {{ course.departmentcode }}</li>
+    <li>Course UID: {{ course.courseuid }}</li>
+    <li>Course Description: {{ course.coursedescription }}</li>
+</ul>
+{% else %}
+<strong>Error retrieving the course.</strong>
+{% endif %}
+</div>
+{% endblock %}

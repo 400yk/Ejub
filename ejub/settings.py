@@ -25,6 +25,9 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+if 'DJANGO_SETTINGS_MODULE' not in os.environ:
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'ejub.settings'
+
 
 # Application definition
 
@@ -35,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'south',
     'ej',
 )
 
@@ -58,7 +62,7 @@ WSGI_APPLICATION = 'ejub.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test_ejub',
+        'NAME': 'test_ej',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
