@@ -126,17 +126,35 @@ def course_detail(request, course_id):
 # Once the user finds the course, retrieve the course detail
 def job_detail(request, job_id):
     context = RequestContext(request)
-    course = {}
-    related_jobs = []
+    job = {}
+    related_courses = []
     # The maximum amount of related jobs that can be shown
-    max_jobs = 15
+    max_courses = 15
     if job_id:
-        course = JobsList.objects.get(pk = job_id)
-        for skill in course.skillsLists.all():
-            if len(related_jobs) <= max_jobs:
-                related_jobs += skill.courseslist_set.all()
+        job = JobsList.objects.get(pk = job_id)
+        for skill in job.skillsLists.all():
+            if len(related_courses) <= max_courses:
+                related_courses += skill.courseslist_set.all()
             else:
                 break
-        if len(related_jobs) > max_jobs:
-            related_jobs = related_jobs[:max_jobs]
-    return render_to_response('ej/job_detail.html', {'job': course, 'related_courses': related_jobs}, context) 
+        if len(related_courses) > max_courses:
+            related_courses = related_courses[:max_courses]
+    return render_to_response('ej/job_detail.html', {'job': job, 'related_courses': related_courses}, context) 
+
+def from_skill_find_courses(request):
+    context = RequestContext(request)
+    courses = []
+    max_courses = 15
+    skill = {}
+    if request.method == "GET":
+        skill_id = request.GET['skill_id']
+        if skill_id:
+            skill = SkillsList.objects.get(pk = skill_id)
+            courses += skill.courseslist_set.all()
+            print courses
+            if len(courses) > max_courses:
+                courses = courses[:max_courses]
+    else:
+        skill_id = request.POST['skill_id']
+
+    return render_to_response('ej/from_skill_find_courses.html', {'courses': courses, 'skill': skill}, context)

@@ -22,16 +22,16 @@
         </div>
 
         <div class="span4">
-            <h4>Skills</h4>
+            <h4 class="job-required-skills">Skills</h4>
             <ul>
                 {% for skill in job.skillsLists.all %}
-                <li>{{ skill.skill }}</li>
+                <li skill_id={{ skill.id }} class="job-required-skills">{{ skill.skill }}</li>
                 {% endfor %}
             </ul>
         </div>
 
-        <div class="span4">
-            <h4>Related courses</h4>
+        <div id="job-related-courses" class="span4">
+            <h4 id="job-related-courses-header">All related courses</h4>
             {% if related_courses %}
             <ul>
                 {% for course in related_courses %}

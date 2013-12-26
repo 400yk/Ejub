@@ -95,6 +95,30 @@ $(document).ready(function() {
         });
     });
 
+    // Hover over a skill will show the classes that trains it
+    $(".job-required-skills").hover(function() {
+        $(".job-required-skills").removeClass('hovered_skills');
+        $(this).addClass('hovered_skills');
+    });
+    
+    var all_required_skills;
+
+    $("li.job-required-skills").click(function() {
+        $.get('/ej/from_skill_find_courses/', {skill_id: $(this).attr('skill_id')}, function(data) { 
+            // Save the html to variable 
+            if (all_required_skills == null) { 
+                all_required_skills = $("#job-related-courses").html();
+            };
+            $("#job-related-courses").html(data);
+        });
+    });
+
+    $("h4.job-required-skills").click(function() {
+        if (all_required_skills !== null) {
+            $("#job-related-courses").html(all_required_skills);
+            all_required_skills = null;
+        };
+    });
 
 });
 

@@ -10,5 +10,7 @@ urlpatterns = patterns('',
         url(r'^job_detail/(?P<job_id>\d+)/$', views.job_detail, name = 'job_detail'),
         url(r'^course_search/', views.course_search, name = 'course_search'),
         url(r'^course_detail/(?P<course_id>\d+)/$', views.course_detail, name = 'course_detail'),
+        url(r'^from_skill_find_courses/', views.from_skill_find_courses),
         )
+
 

@@ -1,0 +1,12 @@
+{% if skill %}
+<h4>"{{ skill.skill }}" Related Courses</h4>
+<ul>
+    {% if courses %}
+    {% for course in courses %}
+    <li><a href="{% url 'ej:course_detail' course.id %}">{{ course.coursetitle }}</a></li>
+    {% endfor %}
+    {% else %}
+    <strong>No courses that match the selected skill.</strong>
+    {% endif %}
+</ul>
+{% endif %}
