@@ -1,0 +1,9 @@
+<h4>Related jobs</h4>
+{% if related_jobs %}
+<ul>
+    {% for job in related_jobs %}
+    <li><a href="http://www.linkedin.com/jobs2/view/{{ job.job_id }}/">{{ job.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+

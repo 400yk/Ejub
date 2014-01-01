@@ -37,8 +37,12 @@
 
         <div class="container-fluid">
             <div class="row-fluid">
+                <div class="span10">
+                    {% block body %}{% endblock %}
+                </div>
+
                 <div class="span2">
-                    <div class="well sidebar-nav">
+                    <div id="quick-ref" class="well sidebar-nav">
                         <ul class="nav nav-list">
                             <li class="nav-header">Quick Navigation</li>
                         </ul>
@@ -46,9 +50,7 @@
                     </div>
                 </div>
 
-                <div class="span10">
-                    {% block body %}{% endblock %}
-                </div>
+
             </div>
         </div>
 

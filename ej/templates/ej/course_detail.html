@@ -1,10 +1,11 @@
 {% extends 'ej/base.html' %}
+{% load static %}
 {% block body %}
 <div class="container-fluid">
     {% if course %}
-    <h2>{{ course.coursetitle }}</h2>
+        <h2>{{ course.coursetitle }}</h2>
     <div class="row-fluid">
-        <div class="span4">
+        <div id="div-course-detail" course_id="{{ course.id }}" class="span4">
             <h4>Course information</h4>
             <ul>
                 <li>Department: {{ course.departmentcode }}</li>
@@ -15,7 +16,7 @@
             </ul>
         </div>
 
-        <div class="span4">
+        <div class="span3">
             <h4>Skills</h4>
             <ul>
                 {% for skill in course.skillsLists.all %}
@@ -24,7 +25,7 @@
             </ul>
         </div>
 
-        <div class="span4">
+        <div id="course-related-jobs" class="span5">
             <h4>Related jobs</h4>
             {% if related_jobs %}
             <ul>
@@ -39,4 +40,5 @@
     <strong>Error retrieving the course.</strong>
     {% endif %}
 </div>
+<script type="text/javascript" src="{% static 'js/ej-ajax-courses.js' %}"></script>
 {% endblock %}

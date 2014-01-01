@@ -1,4 +1,6 @@
+import MySQLdb
 from ej.models import CoursesList, SkillsList, JobsList
+from django.db.models import Sum, Count
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
@@ -20,7 +22,7 @@ def jobs(request):
     return render_to_response('ej/jobs.html', context)
 
 
-def get_job(max_jobs = 0, starts_with = {}):
+def search_job(max_jobs = 0, starts_with = {}):
     job_list = []
     if starts_with:
         filterargs = {}
@@ -58,11 +60,11 @@ def job_search(request):
         for field in field_list:
             starts_with[field] = request.POST['search_' + field]
 
-    job_list = get_job(15, starts_with)
+    job_list = search_job(15, starts_with)
     return render_to_response('ej/job_search.html', {'job_list': job_list}, context)
 
 
-def get_course(max_courses = 0, starts_with = {}):
+def search_course(max_courses = 0, starts_with = {}):
     course_list = []
     if starts_with:
         filterargs = {}
@@ -100,7 +102,7 @@ def course_search(request):
         for field in field_list:
             starts_with[field] = request.POST['search_' + field]
 
-    course_list = get_course(15, starts_with)
+    course_list = search_course(15, starts_with)
     return render_to_response('ej/course_search.html', {'course_list': course_list}, context)
 
 # Once the user finds the course, retrieve the course detail
@@ -158,3 +160,83 @@ def from_skill_find_courses(request):
         skill_id = request.POST['skill_id']
 
     return render_to_response('ej/from_skill_find_courses.html', {'courses': courses, 'skill': skill}, context)
+
+def quick_ref_course_detail(request):
+    context = RequestContext(request)
+    course_id = 0
+    if request.method == "GET":
+        course_id = request.GET['course_id'] 
+
+    return render_to_response('ej/quick_ref_course_detail.html', {'course_id': course_id}, context)
+
+def get_jobs(request):
+    context = RequestContext(request)
+    # The maximum amount of categories that can be shown in the quick navigation bar
+    max_counts = 6
+    top_counts = []
+    course_id = 0
+    field = None
+    if request.method == "GET":
+        field = request.GET['field']
+        course_id = request.GET['course_id']
+        if field and course_id:
+            related_jobs_id = []
+            for skill in CoursesList.objects.get(pk = course_id).skillsLists.all():
+                # Get all the ids for the related job, now create a sql table to facilitate query group by
+                related_jobs_id += [ i.id for i in skill.jobslist_set.all()]
+
+            if field == "all":
+                pass
+            else:
+                top_counts = JobsList.objects.filter(id__in = related_jobs_id)\
+                        .values(field) \
+                        .annotate(count = Count('id')) \
+                        .order_by('-count')
+                
+                # If more than max_counts category, group the extra into "others"
+                if len(top_counts) > max_counts:
+                    other_counts = top_counts[(max_counts-1):]
+                    count_other = 0
+                    for each in other_counts:
+                        count_other += each['count']
+                    top_counts = top_counts[:(max_counts-1)]
+                    top_counts.append({'count': count_other, field: 'Other'})
+                    # Rename the key to a common name for easier accessment in html
+                    # print top_counts
+                    for each in top_counts:
+                        each['field'] = each.pop(field)
+
+
+    return render_to_response('ej/quick_ref_field_counts.html', {'top_counts': top_counts, 'course_id': course_id, 'the_field': field}, context)
+        
+# Update the "Related jobs" column when user clicks on sub-field in the quick-reference
+def filter_jobs(request):
+    context = RequestContext(request)
+    sub_field = None
+    field = None
+    course_id = 0
+    max_jobs = 15
+    related_jobs = []
+    if request.method == "GET":
+        sub_field = request.GET.getlist("sub_field_set[]")
+        field = request.GET.getlist("the_field_set[]")
+        course_id = request.GET["course_id"]
+        if course_id and len(sub_field) == len(field):
+            for skill in CoursesList.objects.get(pk = course_id).skillsLists.all():
+                # Find the jobs that meet sub_field requirement
+                kwargs = {}
+                for i in range(len(sub_field)):
+                    kwargs['{0}__{1}'.format(field[i], 'exact')] = sub_field[i]
+                if kwargs:
+                    related_jobs += skill.jobslist_set.filter(**kwargs)
+                # If field and sub_field are empty, get all jobs
+                else:
+                    related_jobs += skill.jobslist_set.all()
+        
+            # If more than max_jobs, cap it to max_jobs
+            if len(related_jobs) > max_jobs:
+                related_jobs = related_jobs[:max_jobs]
+
+    return render_to_response('ej/update_related_jobs.html', {'related_jobs': related_jobs}, context)
+
+
