@@ -20,11 +20,13 @@ $(document).ready(function() {
             course_id = $(this).attr("course-id");
             var the_field_set = [];
             var sub_field_set = [];
+            var other_fields_set = [];
             $(".related_jobs_filter_select").each(function() {
                 the_field_set.push($(this).attr('thefield'));
                 sub_field_set.push($(this).attr('subfield'));
+                other_fields_set.push($(this).attr('otherfields'));
             });
-            $.get('/ej/get_jobs/', {field: field, course_id: course_id, the_field_set: the_field_set, sub_field_set: sub_field_set}, function(data) {
+            $.get('/ej/get_jobs/', {field: field, course_id: course_id, the_field_set: the_field_set, sub_field_set: sub_field_set, other_fields_set: other_fields_set}, function(data) {
                 $("#quick-ref-related-jobs").html(data);
             });
         });

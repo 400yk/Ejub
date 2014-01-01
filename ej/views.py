@@ -176,15 +176,21 @@ def get_jobs(request):
         course_id = request.GET['course_id']
         the_field_set = request.GET.getlist("the_field_set[]")
         sub_field_set = request.GET.getlist("sub_field_set[]")
+        other_fields_set = request.GET.getlist("other_fields_set[]")
         if field and course_id:
             related_jobs_id = []
             for skill in CoursesList.objects.get(pk = course_id).skillsLists.all():
                 # Get all the ids for the related job, now create a sql table to facilitate query group by
                 if the_field_set and sub_field_set and len(the_field_set) == len(sub_field_set):
                     kwargs = {}
+                    exclude_kwargs = {}
                     for i in range(len(the_field_set)):
-                        kwargs['{0}__{1}'.format(the_field_set[i], 'exact')] = sub_field_set[i]
-                    related_jobs_id += [i.id for i in skill.jobslist_set.filter(**kwargs)]
+                        if sub_field_set[i] != "Other":
+                            kwargs['{0}__{1}'.format(the_field_set[i], 'exact')] = sub_field_set[i]
+                        else:
+                            other_fields_tmp = [str(k.strip().replace('"','')) for k in other_fields_set[i].strip('[]').split(',')]
+                            exclude_kwargs['{0}__{1}'.format(the_field_set[i], 'in')] = other_fields_tmp
+                    related_jobs_id += [i.id for i in skill.jobslist_set.filter(**kwargs).exclude(**exclude_kwargs)]
                 else:
                     related_jobs_id += [ i.id for i in skill.jobslist_set.all()]
 
@@ -206,11 +212,11 @@ def get_jobs(request):
                     # Add the name of other fields in case user click on 'Other'
                     other_fields = [f[field] for f in top_counts]
                     top_counts.append({'count': count_other, field: 'Other', 'other_fields': json.dumps(other_fields)})
-                    # Rename the key to a common name for easier accessment in html
-                    # print top_counts
-                    for each in top_counts:
-                        each['field'] = each.pop(field)
-
+                # Rename the key to a common name for easier accessment in html
+                # print top_counts
+                for each in top_counts:
+                    each['field'] = each.pop(field)
+    print top_counts
     return render_to_response('ej/quick_ref_field_counts.html', {'top_counts': top_counts, 'course_id': course_id, 'the_field': field}, context)
         
 # Update the "Related jobs" column when user clicks on sub-field in the quick-reference
