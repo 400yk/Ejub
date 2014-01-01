@@ -96,9 +96,13 @@ $(document).ready(function() {
     });
 
     // Hover over a skill will show the classes that trains it
-    $(".job-required-skills").hover(function() {
+    $(".job-required-skills").mouseenter(function() {
         $(".job-required-skills").removeClass('hovered_skills');
         $(this).addClass('hovered_skills');
+    });
+
+    $(".job-required-skills").mouseleave(function() {
+        $(".job-required-skills").removeClass('hovered_skills');
     });
     
     var all_required_skills;

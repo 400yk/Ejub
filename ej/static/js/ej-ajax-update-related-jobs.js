@@ -1,7 +1,11 @@
 $(document).ready(function() {
-    $(".related-jobs-filter").hover(function() {
+    $(".related-jobs-filter").mouseenter(function() {
         $(".related-jobs-filter").removeClass('hovered_skills');
         $(this).addClass('hovered_skills');
+    });
+
+    $(".related-jobs-filter").mouseleave(function() {
+        $(".related-jobs-filter").removeClass('hovered_skills');
     });
 
     $(".related-jobs-filter").click(function() {

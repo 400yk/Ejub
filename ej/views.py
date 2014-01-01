@@ -175,11 +175,19 @@ def get_jobs(request):
     if request.method == "GET":
         field = request.GET['field']
         course_id = request.GET['course_id']
+        the_field_set = request.GET.getlist("the_field_set[]")
+        sub_field_set = request.GET.getlist("sub_field_set[]")
         if field and course_id:
             related_jobs_id = []
             for skill in CoursesList.objects.get(pk = course_id).skillsLists.all():
                 # Get all the ids for the related job, now create a sql table to facilitate query group by
-                related_jobs_id += [ i.id for i in skill.jobslist_set.all()]
+                if the_field_set and sub_field_set and len(the_field_set) == len(sub_field_set):
+                    kwargs = {}
+                    for i in range(len(the_field_set)):
+                        kwargs['{0}__{1}'.format(the_field_set[i], 'exact')] = sub_field_set[i]
+                    related_jobs_id += [i.id for i in skill.jobslist_set.filter(**kwargs)]
+                else:
+                    related_jobs_id += [ i.id for i in skill.jobslist_set.all()]
 
             if field == "all":
                 pass
