@@ -18,5 +18,5 @@ $(document).ready(function() {
                 $("#quick-ref-related-jobs").html(data);
             });
         });
-    });
+   });
 });

@@ -1,9 +1,9 @@
-<h4>Related jobs</h4>
+{% load static %}
 {% if related_jobs %}
 <ul>
     {% for job in related_jobs %}
-    <li><a href="http://www.linkedin.com/jobs2/view/{{ job.job_id }}/">{{ job.title }}</a></li>
+    <li class="related-jobs-list" jobid="{{ job.job_id }}"><a href="http://www.linkedin.com/jobs2/view/{{ job.job_id }}/">{{ job.title }}</a></li>
     {% endfor %}
 </ul>
 {% endif %}
-
+<script type="text/javascript" src="{% static 'js/ej-ajax-highlight-skills-course-detail.js' %}"></script>

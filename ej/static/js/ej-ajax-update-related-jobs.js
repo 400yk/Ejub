@@ -8,8 +8,10 @@ $(document).ready(function() {
         var sub_field = $(this).attr("sub-field");
         var course_id = $(this).attr("course-id");
         var the_field = $(this).attr("the-field");
-           
-         // Show the selected filter 
+
+        // If sub_field is "Other": let user input the sub-field
+
+        // Show the selected filter 
         $("#selected-filter-"+the_field).html(the_field+": "+sub_field);
         document.getElementById("selected-filter-"+the_field).style.display = 'block';
         $("#selected-filter-"+the_field).addClass('related_jobs_filter_select');
@@ -25,7 +27,7 @@ $(document).ready(function() {
         $.get('/ej/filter_jobs/', {sub_field_set: sub_field_set, the_field_set: the_field_set, course_id: course_id}, function(data) {
             $("#course-related-jobs").html(data);
         });
-   });
+    });
 
     // Clicked on selected filter to cancel the filter
     $(".selected-related-jobs-filter").click(function() {

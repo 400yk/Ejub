@@ -3,7 +3,7 @@
 {% block body %}
 <div class="container-fluid">
     {% if course %}
-        <h2>{{ course.coursetitle }}</h2>
+    <h2>{{ course.coursetitle }}</h2>
     <div class="row-fluid">
         <div id="div-course-detail" course_id="{{ course.id }}" class="span4">
             <h4>Course information</h4>
@@ -20,20 +20,22 @@
             <h4>Skills</h4>
             <ul>
                 {% for skill in course.skillsLists.all %}
-                <li>{{ skill.skill }}</li>
+                <li class="course-detail-each-skill" skillid="{{ skill.id }}">{{ skill.skill }}</li>
                 {% endfor %}
             </ul>
         </div>
 
-        <div id="course-related-jobs" class="span5">
-            <h4>Related jobs</h4>
-            {% if related_jobs %}
-            <ul>
-                {% for job in related_jobs %}
-                <li><a href="http://www.linkedin.com/jobs2/view/{{ job.job_id }}/">{{ job.title }}</a></li>
-                {% endfor %}
-            </ul>
-            {% endif %}
+        <div class="span5">
+                        <h4>Related jobs</h4>
+            <div id="course-related-jobs">
+                {% if related_jobs %}
+                <ul>
+                    {% for job in related_jobs %}
+                    <li class="related-jobs-list" jobid="{{ job.job_id }}"><a href="http://www.linkedin.com/jobs2/view/{{ job.job_id }}/">{{ job.title }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
         </div>
     </div>
     {% else %}
@@ -41,4 +43,5 @@
     {% endif %}
 </div>
 <script type="text/javascript" src="{% static 'js/ej-ajax-courses.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/ej-ajax-highlight-skills-course-detail.js' %}"></script>
 {% endblock %}

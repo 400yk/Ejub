@@ -1,5 +1,7 @@
 import MySQLdb
+import collections
 from ej.models import CoursesList, SkillsList, JobsList
+from django.utils import simplejson
 from django.db.models import Sum, Count
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
@@ -110,20 +112,14 @@ def course_detail(request, course_id):
     context = RequestContext(request)
     course = {}
     related_jobs = []
+    related_jobs_id = []
     # The maximum amount of related jobs that can be shown
     max_jobs = 15
     if course_id:
         course = CoursesList.objects.get(pk = course_id)
-        for skill in course.skillsLists.all():
-            if len(related_jobs) <= max_jobs:
-                related_jobs += skill.jobslist_set.all()
-            else:
-                break
-        print related_jobs
-        if len(related_jobs) > max_jobs:
-            related_jobs = related_jobs[:max_jobs]
-    return render_to_response('ej/course_detail.html', {'course': course, 'related_jobs': related_jobs}, context) 
+        related_jobs = sort_by_relevance(course.skillsLists.all(), max_jobs)
 
+    return render_to_response('ej/course_detail.html', {'course': course, 'related_jobs': related_jobs}, context) 
 
 # Once the user finds the course, retrieve the course detail
 def job_detail(request, job_id):
@@ -222,21 +218,46 @@ def filter_jobs(request):
         field = request.GET.getlist("the_field_set[]")
         course_id = request.GET["course_id"]
         if course_id and len(sub_field) == len(field):
-            for skill in CoursesList.objects.get(pk = course_id).skillsLists.all():
-                # Find the jobs that meet sub_field requirement
-                kwargs = {}
-                for i in range(len(sub_field)):
-                    kwargs['{0}__{1}'.format(field[i], 'exact')] = sub_field[i]
-                if kwargs:
-                    related_jobs += skill.jobslist_set.filter(**kwargs)
-                # If field and sub_field are empty, get all jobs
-                else:
-                    related_jobs += skill.jobslist_set.all()
-        
-            # If more than max_jobs, cap it to max_jobs
-            if len(related_jobs) > max_jobs:
-                related_jobs = related_jobs[:max_jobs]
+            # Find the jobs that meet sub_field requirement
+            kwargs = {}
+            for i in range(len(sub_field)):
+                kwargs['{0}__{1}'.format(field[i], 'exact')] = sub_field[i]
+            related_jobs = sort_by_relevance(CoursesList.objects.get(pk = course_id).skillsLists.all(), max_jobs, kwargs)
+
 
     return render_to_response('ej/update_related_jobs.html', {'related_jobs': related_jobs}, context)
 
+def sort_by_relevance(skill_set, max_jobs = 15, kwargs = {}):
+    related_jobs_id = []
+    related_jobs = []
+    if kwargs:
+        for skill in skill_set:
+            related_jobs_id += [i.id for i in skill.jobslist_set.filter(**kwargs)]
+    else:
+        for skill in skill_set: 
+           related_jobs_id += [i.id for i in skill.jobslist_set.all()]
+    
+    # Sort the jobs by the maximum number of matches in skills
+    counter = collections.Counter(related_jobs_id)
+    related_jobs_id = [job_id for job_id, count in counter.most_common(max_jobs)]
+    for best_match in related_jobs_id:
+        related_jobs.append(JobsList.objects.get(pk = best_match))
+
+    return related_jobs
+
+   
+
+def from_job_get_skill(request):
+    skills_id = []
+    if request.method == "GET":
+        job_id = request.GET['job_id']
+        if job_id:
+            job = JobsList.objects.filter(job_id = job_id)
+            if job:
+                job = job[0]
+                skills = job.skillsLists.all()
+                skills_id = [s.id for s in skills]
+    
+    json_skills = simplejson.dumps({"skills_id": skills_id})
+    return HttpResponse(json_skills, content_type="application/json")
 

@@ -14,6 +14,7 @@ urlpatterns = patterns('',
         url(r'^quick_ref_course_detail/', views.quick_ref_course_detail),
         url(r'^get_jobs/', views.get_jobs),
         url(r'^filter_jobs/', views.filter_jobs),
+        url(r'^from_job_get_skill', views.from_job_get_skill),
         )
 
 
