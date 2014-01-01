@@ -13,6 +13,7 @@ $(document).ready(function() {
         var course_id = $(this).attr("course-id");
         var the_field = $(this).attr("the-field");
 
+        $("#quick-ref-related-jobs").html("");
         // If sub_field is "Other": let user input the sub-field
 
         // Show the selected filter 

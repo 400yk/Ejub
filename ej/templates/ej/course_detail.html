@@ -26,7 +26,7 @@
         </div>
 
         <div class="span5">
-                        <h4>Related jobs</h4>
+            <h4>Related jobs</h4>
             <div id="course-related-jobs">
                 {% if related_jobs %}
                 <ul>
@@ -35,6 +35,17 @@
                     {% endfor %}
                 </ul>
                 {% endif %}
+            </div>
+            <div class="related-jobs-filter-labels">
+                <div id="selected-filter-related-jobs"> 
+                        <span class="label label-primary selected-related-jobs-filter" id="selected-filter-industry" course-id="{{ course.id }}" thefield="industry" style="display:none"></span>
+                        <span class="label label-info selected-related-jobs-filter" id="selected-filter-company" course-id="{{ course.id }}" thefield="company" style="display:none"></span>
+                        <span class="label label-success selected-related-jobs-filter" id="selected-filter-functions" course-id="{{ course.id }}" thefield="functions" style="display:none"></span>
+                        <span class="label label-warning selected-related-jobs-filter" id="selected-filter-experience" course-id="{{ course.id }}" thefield="experience" style="display:none"></span>
+                        <span class="label label-danger selected-related-jobs-filter" id="selected-filter-country" course-id="{{ course.id }}" thefield="country" style="display:none"></span>
+                        <span class="label label-default selected-related-jobs-filter"  id="selected-filter-posted" course-id="{{ course.id }}" thefield="posted" style="display:none"></span>
+                </div>
+
             </div>
         </div>
     </div>

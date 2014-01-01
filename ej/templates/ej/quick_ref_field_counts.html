@@ -1,10 +1,10 @@
 {% load static %}
 {% if top_counts %}
 <hr/>
-<ol>
+<ul> 
 {% for each_category in top_counts %}
 <li class="related-jobs-filter" course-id="{{ course_id }}" the-field="{{ the_field }}" sub-field="{{ each_category.field }}">{{ each_category.field }} ({{ each_category.count }})</li>
 {% endfor %}
-</ol>
+</ul>
 {% endif %}
 <script type="text/javascript" src="{% static 'js/ej-ajax-update-related-jobs.js' %}"></script>

@@ -6,3 +6,10 @@
 .related_jobs_filter_select {
     font-weight: bold;
 }
+
+footer {
+    position: fixed;
+    height: 13%;
+    bottom: 0;
+    width: 100%;
+}

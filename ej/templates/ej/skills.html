@@ -1,0 +1,28 @@
+{% extends 'ej/base.html' %}
+{% load static %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span6">
+            {% if top_skills_industry %}
+            <h3>Top skills demended from the industry</h3>
+            <ol>
+                {% for sk in top_skills_industry %}
+                <li>{{ sk.skill }}</li>
+                {% endfor %}
+            </ol>
+            {% endif %}
+        </div>
+        <div class="span6">
+            {% if top_skills_college %}
+            <h3>Top skills taught in school</h3>
+            <ol>
+                {% for s in top_skills_college %}
+                <li>{{ s.skill }}</li>
+                {% endfor %}
+            </ol>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

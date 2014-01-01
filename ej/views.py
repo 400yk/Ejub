@@ -269,3 +269,8 @@ def from_job_get_skill(request):
     json_skills = simplejson.dumps({"skills_id": skills_id})
     return HttpResponse(json_skills, content_type="application/json")
 
+def skills(request):
+    context = RequestContext(request)
+    top_skills_industry = SkillsList.objects.all().annotate(count = Count('jobslist')).order_by('-count')[:15]
+    top_skills_college = SkillsList.objects.all().annotate(count = Count('courseslist')).order_by('-count')[:15]
+    return render_to_response('ej/skills.html', {'top_skills_industry': top_skills_industry, 'top_skills_college': top_skills_college}, context)

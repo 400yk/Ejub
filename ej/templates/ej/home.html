@@ -1,9 +1,14 @@
 {% extends 'ej/base.html' %}
 {% load static %}
 {% block body %}
-<div class="hero-unit">
-    <h1>Test home page</h1>
-</div>
-
+<style type="text/css">
+    body {
+        background: url("{% static 'img/ucberkeley.jpg' %}") no-repeat scroll 0 0 / 100% 460%  transparent !important;
+        height: 100%;
+    }
+    footer {
+        color: white;
+    }
+</style>
+<h2 style="color: white;">Welcome to Ejub (beta) for UC Berkeley!</h2>
 {% endblock %}
-
