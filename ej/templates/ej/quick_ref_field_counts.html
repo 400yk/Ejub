@@ -3,7 +3,9 @@
 <hr/>
 <ul> 
 {% for each_category in top_counts %}
+{% if each_category.field %}
 <li class="related-jobs-filter" course-id="{{ course_id }}" the-field="{{ the_field }}" sub-field="{{ each_category.field }}">{{ each_category.field }} ({{ each_category.count }})</li>
+{% endif %}
 {% endfor %}
 </ul>
 {% endif %}
