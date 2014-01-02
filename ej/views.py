@@ -1,6 +1,8 @@
 import MySQLdb
 import collections
 import json
+from django.utils import timezone
+import datetime
 from ej.models import CoursesList, SkillsList, JobsList
 from django.db.models import Sum, Count
 from django.shortcuts import render, render_to_response
@@ -196,6 +198,38 @@ def get_jobs(request):
 
             if field == "all":
                 pass
+            # Need special treatment for date type, rank by recent to old
+            elif field == "posted":
+                jobs_tmp = JobsList.objects.filter(id__in = related_jobs_id)
+                # Use tuple in order to keep the order
+                times_count = (('Past week', 0), ('Past month', 0), ('Past quarter', 0), ('Past year', 0), ('Past 3 years', 0), ('3 years older', 0))
+                times_count = collections.OrderedDict(times_count)
+                for j in jobs_tmp:
+                    time_passed = None
+                    # Convert to number of days that has passed
+                    time_passed =  ((timezone.now() - j.posted).days)
+                    if time_passed or time_passed == 0:
+                        # Past week
+                        if time_passed <= 7:
+                            times_count['Past week'] += 1
+                        # Past month
+                        elif time_passed <= (365 / 12):
+                            times_count['Past month'] += 1
+                        # Past quarter
+                        elif time_passed <= (3 * 365 / 12):
+                            times_count['Past quarter'] += 1
+                        # Past year
+                        elif time_passed <= 365.25:
+                            times_count['Past year'] += 1
+                        # Past three years
+                        elif time_passed <= 3 * 365.25:
+                            times_count['Past three years'] += 1
+                        # More than three years from now
+                        else:
+                            times_count['3 years older'] += 1
+                    
+                top_counts = [{'count':v, 'field': k} for k,v in times_count.iteritems()]
+
             else:
                 top_counts = JobsList.objects.filter(id__in = related_jobs_id)\
                         .values(field) \
@@ -237,14 +271,33 @@ def filter_jobs(request):
             kwargs = {}
             exclude_kwargs = {}
             for i in range(len(sub_field)):
-                # If sub_field isn't other, do the regular filtering
-                if sub_field[i] != 'Other':
-                    kwargs['{0}__{1}'.format(field[i], 'exact')] = sub_field[i]
+                # Need special treatment for posted filter
+                if field[i] == 'posted':
+                    if sub_field[i] == 'Past week':
+                        kwargs['{0}__{1}'.format(field[i], 'gte')] = timezone.now() - datetime.timedelta(days = 7)
+                    elif sub_field[i] == 'Past month':
+                        kwargs['{0}__{1}'.format(field[i], 'lt')] = timezone.now() - datetime.timedelta(days = 7)
+                        kwargs['{0}__{1}'.format(field[i], 'gte')] = timezone.now() - datetime.timedelta(days = 31)
+                    elif sub_field[i] == 'Past quarter':
+                        kwargs['{0}__{1}'.format(field[i], 'lt')] = timezone.now() - datetime.timedelta(days = 31)
+                        kwargs['{0}__{1}'.format(field[i], 'gte')] = timezone.now() - datetime.timedelta(days = 92)
+                    elif sub_field[i] == 'Past year':
+                        kwargs['{0}__{1}'.format(field[i], 'lt')] = timezone.now() - datetime.timedelta(days = 92)
+                        kwargs['{0}__{1}'.format(field[i], 'gte')] = timezone.now() - datetime.timedelta(days = 365)
+                    elif sub_field[i] == 'Past 3 years':
+                        kwargs['{0}__{1}'.format(field[i],'lt')] = timezone.now() - datetime.timedelta(days = 365)
+                        kwargs['{0}__{1}'.format(field[i],'gte')] = timezone.now() - datetime.timedelta(days = 365 * 3)
+                    elif sub_field[i] == '3 years older':
+                        kwargs['{0}__{1}'.format(field[i], 'lt')] = timezone.now() - datetime.timedelta(days = 365 * 3)
                 else:
-                   # each element in other_fields is in unicode, need to convert it to string
-                    other_fields_tmp = [str(k.strip().replace('"', '')) for k in other_fields[i].strip('[]').split(",")]
- 
-                    exclude_kwargs['{0}__{1}'.format(field[i], 'in')] = other_fields_tmp
+                    # If sub_field isn't other, do the regular filtering
+                    if sub_field[i] != 'Other':
+                        kwargs['{0}__{1}'.format(field[i], 'exact')] = sub_field[i]
+                    else:
+                       # each element in other_fields is in unicode, need to convert it to string
+                        other_fields_tmp = [str(k.strip().replace('"', '')) for k in other_fields[i].strip('[]').split(",")]
+     
+                        exclude_kwargs['{0}__{1}'.format(field[i], 'in')] = other_fields_tmp
 
             related_jobs = sort_by_relevance(CoursesList.objects.get(pk = course_id).skillsLists.all(), max_jobs, kwargs, exclude_kwargs)
 
