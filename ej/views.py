@@ -223,7 +223,7 @@ def get_jobs(request):
                             times_count['Past year'] += 1
                         # Past three years
                         elif time_passed <= 3 * 365.25:
-                            times_count['Past three years'] += 1
+                            times_count['Past 3 years'] += 1
                         # More than three years from now
                         else:
                             times_count['3 years older'] += 1

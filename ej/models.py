@@ -56,8 +56,8 @@ class JobsList(models.Model):
     skills = models.TextField(db_column='Skills', blank=True) 
     posted = models.DateTimeField(db_column='Posted', blank=True, null=True) 
     employmenttype = models.CharField(db_column='EmploymentType', max_length=50, blank=True) 
-    functions = models.CharField(db_column='Functions', max_length=60, blank=True) 
-    industry = models.CharField(db_column='Industry', max_length=60, blank=True) 
+    functions = models.CharField(db_column='Functions', max_length=100, blank=True) 
+    industry = models.CharField(db_column='Industry', max_length=150, blank=True) 
 
     skillsLists = models.ManyToManyField(SkillsList)
 
