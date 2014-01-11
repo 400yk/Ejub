@@ -8,8 +8,8 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'ejub.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^$', RedirectView.as_view(url='/berkeley/')),
+    url(r'^$', RedirectView.as_view(url='/ej/')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^berkeley/', include('ej.urls', namespace = 'ej')),
+    url(r'^ej/', include('ej.urls', namespace = 'ej')),
 )
 
