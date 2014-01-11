@@ -14,6 +14,9 @@ def home(request):
     context = RequestContext(request)
     return render_to_response('ej/home.html', context)
 
+def about(request):
+    context = RequestContext(request)
+    return render_to_response('ej/about.html', context)
 def courses(request):
     context = RequestContext(request)
     return render_to_response('ej/courses.html', context)

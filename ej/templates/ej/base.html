@@ -28,7 +28,7 @@
                             <li><a href="{% url 'ej:jobs' %}">Jobs</a></li>
                         </ul>
                         <ul class="nav pull-right">
-                            <li><a href="#">Register</a></li>
+                            <li><a href="{% url 'ej:about' %}">About</a></li>
                         </ul>
                     </div>
                 </div>
@@ -44,8 +44,11 @@
                 <div class="span2">
                     <div id="quick-ref" class="well sidebar-nav">
                         <ul class="nav nav-list">
-                            <li class="nav-header">Quick Navigation</li>
-                        </ul>
+                            <li class="nav-header">Get started</li>
+                        <a href="{% url 'ej:courses' %}">Search courses</a>
+                        <br />
+                        <a href="{% url 'ej:jobs' %}">Search jobs</a>
+                    </ul>
                         <div></div>
                     </div>
                 </div>
@@ -57,7 +60,7 @@
         <footer>
         <hr/>
         <div class="container">
-            <p>&copy; Ejub: from education to jobs. Powered by Django</p>
+            <p>&copy; Ejub: from education to jobs.</p>
         </div>
         </footer>
         <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>

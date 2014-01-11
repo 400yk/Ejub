@@ -3,6 +3,7 @@ from ej import views
 
 urlpatterns = patterns('',
         url(r'^$', views.home, name = 'home'),
+        url(r'^about/', views.about, name = 'about'),
         url(r'^skills/', views.skills, name = 'skills'),
         url(r'^courses/', views.courses, name = 'courses'),
         url(r'^jobs/', views.jobs, name = 'jobs'),

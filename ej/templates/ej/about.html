@@ -1,0 +1,27 @@
+{% extends 'ej/base.html' %}
+{% block title %}
+About Ejub 
+{% endblock %}
+{% block body %}
+<p>
+Which class to take to prepare myself for..? How do I become an analyst at..? Questions like those were not uncommon among college students. On the other hand, the gap between the industry demand and what the school teaches has never been wider. Ejub summarizes the required skills from job postings and links to the courses that teach those skills. Ejub completes these sentences:
+</p>
+<p>
+<ul>
+    <li>
+    By taking this course I could learn …, which prepares me for … at company …, and I will also be ready for this industry … 
+    </li>
+    <li>
+In order to become a … at company … (or a graduate student at …), the required skills are …, and here are my planned courses over the next two years: …
+</li>
+</ul>
+<br />
+<p>
+Ejub, education leads to job. This site is the prototype to demonstrate the idea. The prototype only contains around 2,000 jobs in the database at the moment. It starts with the courses at UC Berkeley which will be our first test-ground. Look for passionate co-founders who is either technical or sales-oriented (or both). Technical-wise, prefer to have skills in Python, NLP, databases, machine-learning, web programming (we use Django at this moment). 
+</p>
+<p>
+About me: I am a graduate of Haas School of Business with a master’s in financial engineering. Have a full-time job in San Francisco but I spend lots of my spare time in this project. Please feel free to contact me at <a href="mailto:kevinyang@ejub.us">kevinyang@ejub.us</a>
+</p>
+<br/>
+<a class="btn btn-primary" href="{% url 'ej:home' %}">Home page</a>
+{% endblock %}
