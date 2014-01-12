@@ -25,7 +25,11 @@ DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+# This is a production setting
+ALLOWED_HOSTS = [
+        '.ejub.us',
+        '.ejub.us.',
+        ]
 
 if 'DJANGO_SETTINGS_MODULE' not in os.environ:
     os.environ['DJANGO_SETTINGS_MODULE'] = 'ejub.settings'

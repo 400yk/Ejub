@@ -10,7 +10,7 @@ env.roledefs = {
 def deploy():
     project_dir = '/home/youngwide/webapps/ejub'
     django_dir = project_dir + '/ejub'
-    with prefix('source /home/youngwide/webapps/ejub_site/bin/activate'):
+    with prefix('source /home/youngwide/webapps/ejub/ejub_site/bin/activate'):
         with cd(django_dir):
             run('git fetch')
             run('git pull origin master')
