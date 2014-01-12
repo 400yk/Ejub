@@ -21,7 +21,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, '../../ejub_static').replace('\\','/')
 SECRET_KEY = 'v*089on$q#wm3h*f=m=yi8c-r3wa!gl-o8fvdo!&)^w42^_x=9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
@@ -90,3 +90,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = 'http://www.ejub.us/ej/static/'
+
+try:
+    from settings_dev import *
+except ImportError, e:
+    pass
+
+
