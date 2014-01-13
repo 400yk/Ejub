@@ -142,6 +142,9 @@ def job_detail(request, job_id):
                 break
         if len(related_courses) > max_courses:
             related_courses = related_courses[:max_courses]
+
+        job.description = job.description.replace("|"," ")
+        job.skills = job.skills.replace("|", " ")
     return render_to_response('ej/job_detail.html', {'job': job, 'related_courses': related_courses}, context) 
 
 def from_skill_find_courses(request):
@@ -346,9 +349,24 @@ def from_job_get_skill(request):
                 job = job[0]
                 skills = job.skillsLists.all()
                 skills_id = [s.id for s in skills]
+                skills_name = [s.skill for s in skills]
     
-    json_skills = json.dumps({"skills_id": skills_id})
+    json_skills = json.dumps({"skills_id": skills_id, "skills_name": skills_name})
     return HttpResponse(json_skills, content_type="application/json")
+
+def get_other_skills_needed(request):
+    context = RequestContext(request)
+    other_skills_id = []
+    other_skills = None
+    if request.method == "GET":
+        other_skills_id = request.GET.getlist('other_skills_id[]')
+        print other_skills_id
+        other_skills = SkillsList.objects.filter(id__in = other_skills_id)
+
+    return render_to_response('ej/other_skills_needed.html', {'other_skills': other_skills}, context)
+
+
+    
 
 def skills(request):
     context = RequestContext(request)

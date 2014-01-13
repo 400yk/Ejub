@@ -1,0 +1,9 @@
+{% if other_skills %}
+<hr />
+<h4>Other Skills Needed</h4>
+    <ul>
+    {% for s in other_skills %}
+    <li class="course-detail-each-skill hovered_skills" skillid="{{ s.id }}">{{ s.skill }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}

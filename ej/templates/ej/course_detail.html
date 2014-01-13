@@ -23,27 +23,44 @@
                 <li class="course-detail-each-skill" skillid="{{ skill.id }}">{{ skill.skill }}</li>
                 {% endfor %}
             </ul>
+            <div id="other-skills-needed">
+            </div>
         </div>
 
         <div class="span5">
-            <h4>Related jobs</h4>
             <div id="course-related-jobs">
                 {% if related_jobs %}
-                <ul>
-                    {% for job in related_jobs %}
-                    <li class="related-jobs-list" jobid="{{ job.job_id }}"><a href="http://www.linkedin.com/jobs2/view/{{ job.job_id }}/">{{ job.title }}</a></li>
-                    {% endfor %}
-                </ul>
+                <table id="related-jobs-table">
+                    <thead>
+                        <tr>
+                            <th><h5>Job title</h5></th>
+                            <th><h5>Company</h5></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for job in related_jobs %}
+                        <tr>
+                            <td>
+                                <a href="http://www.linkedin.com/jobs2/view/{{ job.job_id }}/"><img src="{% static 'img/linkedin.jpg' %}" height="15" width="15" style="display:inline; float:left" /></a>
+                                <div class="related-jobs-list" jobid="{{ job.job_id }}"><a href="{% url 'ej:job_detail' job.id %}">&nbsp;{{ job.title }}</a></div>
+                            </td>
+                            <td>
+                                <div>{{ job.company }}</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
                 {% endif %}
             </div>
             <div class="related-jobs-filter-labels">
                 <div id="selected-filter-related-jobs"> 
-                        <span class="label label-primary selected-related-jobs-filter" id="selected-filter-industry" course-id="{{ course.id }}" thefield="industry" style="display:none"></span>
-                        <span class="label label-info selected-related-jobs-filter" id="selected-filter-company" course-id="{{ course.id }}" thefield="company" style="display:none"></span>
-                        <span class="label label-success selected-related-jobs-filter" id="selected-filter-functions" course-id="{{ course.id }}" thefield="functions" style="display:none"></span>
-                        <span class="label label-warning selected-related-jobs-filter" id="selected-filter-experience" course-id="{{ course.id }}" thefield="experience" style="display:none"></span>
-                        <span class="label label-danger selected-related-jobs-filter" id="selected-filter-country" course-id="{{ course.id }}" thefield="country" style="display:none"></span>
-                        <span class="label label-default selected-related-jobs-filter"  id="selected-filter-posted" course-id="{{ course.id }}" thefield="posted" style="display:none"></span>
+                    <span class="label label-primary selected-related-jobs-filter" id="selected-filter-industry" course-id="{{ course.id }}" thefield="industry" style="display:none"></span>
+                    <span class="label label-info selected-related-jobs-filter" id="selected-filter-company" course-id="{{ course.id }}" thefield="company" style="display:none"></span>
+                    <span class="label label-success selected-related-jobs-filter" id="selected-filter-functions" course-id="{{ course.id }}" thefield="functions" style="display:none"></span>
+                    <span class="label label-warning selected-related-jobs-filter" id="selected-filter-experience" course-id="{{ course.id }}" thefield="experience" style="display:none"></span>
+                    <span class="label label-danger selected-related-jobs-filter" id="selected-filter-country" course-id="{{ course.id }}" thefield="country" style="display:none"></span>
+                    <span class="label label-default selected-related-jobs-filter"  id="selected-filter-posted" course-id="{{ course.id }}" thefield="posted" style="display:none"></span>
                 </div>
 
             </div>

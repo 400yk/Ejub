@@ -7,9 +7,18 @@
     font-weight: bold;
 }
 
+html, body {
+    height: 88%;
+}
+
+#wrapper {
+    min-height: 100%;
+    height: auto !important;
+    margin: 0 auto -60px 0;
+    padding: 0 0 60px 0;
+}
+
 footer {
-    position: fixed;
-    height: 13%;
-    bottom: 0;
+    height: 60px;
     width: 100%;
 }

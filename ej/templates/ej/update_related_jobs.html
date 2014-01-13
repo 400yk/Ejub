@@ -1,9 +1,26 @@
 {% load static %}
 {% if related_jobs %}
-<ul>
-    {% for job in related_jobs %}
-    <li class="related-jobs-list" jobid="{{ job.job_id }}"><a href="http://www.linkedin.com/jobs2/view/{{ job.job_id }}/">{{ job.title }}</a></li>
-    {% endfor %}
-</ul>
+<table id="related-jobs-table">
+    <thead>
+        <tr>
+            <th>Job title</th>
+            <th>Company</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for job in related_jobs %}
+        <tr>
+            <td>
+                <a href="http://www.linkedin.com/jobs2/view/{{ job.job_id }}/"><img src="{% static 'img/linkedin.jpg' %}" height="15" width="15" style="display:inline; float:left" /></a>
+                <div class="related-jobs-list" jobid="{{ job.job_id }}"><a href="{% url 'ej:job_detail' job.id %}">&nbsp;{{ job.title }}</a></div>
+            </td>
+            <td>
+                <div>{{ job.company }}</div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endif %}
+{% load static %}
 <script type="text/javascript" src="{% static 'js/ej-ajax-highlight-skills-course-detail.js' %}"></script>
