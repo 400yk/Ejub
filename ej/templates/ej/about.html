@@ -3,27 +3,47 @@
 About Ejub 
 {% endblock %}
 {% block body %}
-<p>
-Which class to take to prepare myself for..? How do I become an analyst at..? Questions like those were not uncommon among college students. On the other hand, the gap between the industry demand and what the school teaches has never been wider. Ejub summarizes the required skills from job postings and links to the courses that teach those skills. Ejub completes these sentences:
-</p>
-<p>
-<ul>
-    <li>
-    By taking this course I could learn …, which prepares me for … at company …, and I will also be ready for this industry … 
-    </li>
-    <li>
-In order to become a … at company … (or a graduate student at …), the required skills are …, and here are my planned courses over the next two years: …
-</li>
-</ul>
-<br />
-<p>
-Ejub, from education to job. This site is the prototype to demonstrate the idea. The prototype operates on a sample job database which only contains around 2,000 jobs at the moment. It starts with the courses at UC Berkeley which will be our first test-ground. 
-</p>
-<p>
-About me: I am a graduate of Haas School of Business with a master’s in financial engineering. Have a full-time job in San Francisco but I spend my spare time in this project. 
-If you have any suggestions or if you are interested in doing this project together, please feel free to contact me at <a href="mailto:kevinyang@ejub.us">kevinyang@ejub.us</a>
-There is a LOT of things to improve and the project will get very data-intensive. Highly preferred if you have skills in Python, NLP, databases, machine-learning, and/or web programming (we use Django at this moment). 
-</p>
-<br/>
-<a class="btn btn-primary" href="{% url 'ej:home' %}">Home page</a>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span10">
+
+            <p>
+            Which class to take to prepare myself for..? How do I become an analyst at..? Questions like those were not uncommon among college students. On the other hand, the gap between the industry demand and what the school teaches has never been wider. Ejub summarizes the required skills from job postings and links to the courses that teach those skills. Ejub completes these sentences:
+            </p>
+            <p>
+            <ul>
+                <li>
+                By taking this course I could learn …, which prepares me for … at company …, and I will also be ready for this industry … 
+                </li>
+                <li>
+                In order to become a … at company … (or a graduate student at …), the required skills are …, and here are my planned courses over the next two years: …
+                </li>
+            </ul>
+            <br />
+            <p>
+            Ejub, from education to job. This site is the prototype to demonstrate the idea. The prototype operates on a sample job database which only contains around 2,000 jobs at the moment. It starts with the courses at UC Berkeley which will be our first test-ground. 
+            </p>
+            <p>
+            About me: I am a graduate of Haas School of Business with a master’s in financial engineering. Have a full-time job in San Francisco but I spend my spare time in this project. 
+            If you have any suggestions or if you are interested in doing this project together, please feel free to contact me at <a href="mailto:kevinyang@ejub.us">kevinyang@ejub.us</a>
+            There is a LOT of things to improve and the project will get very data-intensive. Highly preferred if you have skills in Python, NLP, databases, machine-learning, and/or web programming (we use Django at this moment). 
+            </p>
+            <br/>
+            <a class="btn btn-primary" href="{% url 'ej:home' %}">Home page</a>
+
+        </div>
+
+        <div class="span2">
+            <div id="quick-ref" class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Get started</li>
+                    <a href="{% url 'ej:courses' %}">Search courses</a>
+                    <br />
+                    <a href="{% url 'ej:jobs' %}">Search jobs</a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

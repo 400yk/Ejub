@@ -3,30 +3,64 @@
 {% block title %}Browse by courses{% endblock %}
 {% block body %}
 <div class="container-fluid">
-<h1 id="course-page-head">Search for a course</h1>
     <div class="row-fluid">
-        <div class="span6">
-            <br/>
-            <form class="form-signin span8" method="post" id="course_search_form" action="{% url 'ej:courses' %}">
-                {% csrf_token %}
-                <input type="text" class="input-long search-query" size="50" name="query-course-title" id="query-course-title" placeholder="Course Title"/>
-                <br/>
-                <br/>
-                <input type="text" class="input-long search-query" size="50" name="query-course-deptcode" id="query-course-deptcode" placeholder="Department Code"/>
-                <br/>
-                <br/>
-                <input type="text" class="input-long search-query" size="50" name="query-course-uid" id="query-course-uid" placeholder="Course UID"/>
-            </form>
+        <div class="span10">
+
+            <div class="container-fluid">
+                <h1 id="course-page-head">Search for a course</h1>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <br/>
+                        <form class="form-signin span8" method="post" id="course_search_form" action="{% url 'ej:courses' %}">
+                            {% csrf_token %}
+                            <input type="text" class="input-long search-query" size="50" name="query-course-title" id="query-course-title" placeholder="Course Title"/>
+                            <br/>
+                            <br/>
+                            <input type="text" class="input-long search-query" size="50" name="query-course-deptcode" id="query-course-deptcode" placeholder="Department Code"/>
+                            <br/>
+                            <br/>
+                            <input type="text" class="input-long search-query" size="50" name="query-course-uid" id="query-course-uid" placeholder="Course UID"/>
+                        </form>
+                    </div>
+
+                    <div class="span6">
+                        <div id="course-suggestions">Suggested courses.</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="span6">
-            <div id="course-suggestions">Suggested courses.</div>
+        <div class="span2">
+            <div id="quick-ref" class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Get started</li>
+                    <a href="{% url 'ej:courses' %}">Search courses</a>
+                    <br />
+                    <a href="{% url 'ej:jobs' %}">Search jobs</a>
+                </ul>
+            </div>
         </div>
     </div>
-
 </div>
-
-
 {% endblock %}
 
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span10">
+
+       </div>
+
+        <div class="span2">
+            <div id="quick-ref" class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Get started</li>
+                    <a href="{% url 'ej:courses' %}">Search courses</a>
+                    <br />
+                    <a href="{% url 'ej:jobs' %}">Search jobs</a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 

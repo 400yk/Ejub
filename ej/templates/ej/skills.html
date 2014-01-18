@@ -1,27 +1,47 @@
 {% extends 'ej/base.html' %}
 {% load static %}
 {% block body %}
+
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="span6">
-            {% if top_skills_industry %}
-            <h3>Top skills demended from the industry</h3>
-            <ol>
-                {% for sk in top_skills_industry %}
-                <li>{{ sk.skill }}</li>
-                {% endfor %}
-            </ol>
-            {% endif %}
+        <div class="span10">
+
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span6">
+                        {% if top_skills_industry %}
+                        <h3>Top skills demended from the industry</h3>
+                        <ol>
+                            {% for sk in top_skills_industry %}
+                            <li>{{ sk.skill }}</li>
+                            {% endfor %}
+                        </ol>
+                        {% endif %}
+                    </div>
+                    <div class="span6">
+                        {% if top_skills_college %}
+                        <h3>Top skills taught in school</h3>
+                        <ol>
+                            {% for s in top_skills_college %}
+                            <li>{{ s.skill }}</li>
+                            {% endfor %}
+                        </ol>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="span6">
-            {% if top_skills_college %}
-            <h3>Top skills taught in school</h3>
-            <ol>
-                {% for s in top_skills_college %}
-                <li>{{ s.skill }}</li>
-                {% endfor %}
-            </ol>
-            {% endif %}
+
+        <div class="span2">
+            <div id="quick-ref" class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Get started</li>
+                    <a href="{% url 'ej:courses' %}">Search courses</a>
+                    <br />
+                    <a href="{% url 'ej:jobs' %}">Search jobs</a>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

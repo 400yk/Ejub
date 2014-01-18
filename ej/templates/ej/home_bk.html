@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta name="viewpoint" content="width=device-with, initial-scale=1.0">
+        <link href="{% static 'css/bootstrap-fluid-adj.css' %}" rel="stylesheet">
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+        <link href="{% static 'css/bootstrap-responsive.css' %}" rel="stylesheet">
+        <link href="{% static 'css/ej.css' %}" rel="stylesheet">
+        <script type="text/javascript" src="{% static 'js/jquery-2.0.3.min.js' %}"></script>
+        <title>Ejub! - {% block title%}Edu to Job!{% endblock %}</title>
+        <style type="text/css">
+            footer {
+                margin-top: 30px;
+            }
+            #section-img-first {
+                background: url("{% static 'img/ucberkeley.jpg' %}") 50% 0 no-repeat fixed; 
+                background-size: 1500px 800px;
+                min-height: 750px;
+                height: 750px;
+                margin: -100px 0 0 0;
+                width: 100%;
+                max-width: 1920px;
+                position: relative;
+            }
+
+            #section-img-first h2 {
+                height: 458px;
+                position: absolute;
+                text-align: center;
+                top: 40%;
+                width: 100%;
+            }
+
+            #section-img-second {
+                background: url("{% static 'img/ucberkeley2.jpg' %}") 50% 0 no-repeat fixed;
+                background-size: 1500px 1125px;
+                min-height: 900px;
+                height: 900px;
+                margin: 0 0 0 0;
+                width: 100%;
+                max-width: 1920px;
+                position: relative;
+            }
+
+            #section-img-second h2 {
+                height: 458px;
+                position: absolute;
+                text-align: center;
+                top: 40%;
+                width: 50%;
+                left: 25%;
+            }
+
+            #section-img-third {
+                background: url("{% static 'img/ucberkeley3.jpg' %}") 0 0 / 0 0 no-repeat fixed;
+                background-size: 1500px 1400px;
+                min-height: 700px;
+                height: 700px;
+                margin: 0 0 0 0;
+                width: 100%;
+                max-width: 1920px;
+                position: relative;
+            }
+
+            #section-img-third h2 {
+                height: 458px;
+                position: absolute;
+                text-align: center;
+                top: 40%;
+                width: 70%;
+                left: 15%;
+            }
+
+
+            #section-txt-first {
+                background-color:#F5F5F5;
+                height: 300px;
+                margin: -10px 0 0 0;
+                width: 100%;
+                max-width: 1920px;
+                position: relative;
+                -webkie-box-shadow: 0 0 50px rgba(0,0,0,0.8);
+                box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            }
+
+            #section-txt-first h2 {
+                position: relative;
+                text-align: center;
+                top: 60px;
+                width: 100%;
+            }
+
+            #section-txt-first p {
+                position: relative;
+                font-size: 20px;
+                text-align: center;
+                top: 100px;
+                width: 60%;
+                left: 20%;
+            }
+
+            #section-txt-second {
+                background-color:#F5F5F5;
+                height: 300px;
+                margin: -10px 0 0 0;
+                width: 100%;
+                max-width: 1920px;
+                position: relative;
+                -webkie-box-shadow: 0 0 50px rgba(0,0,0,0.8);
+                box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            }
+
+            #section-txt-second h2 {
+                position: relative;
+                text-align: center;
+                top: 60px;
+                width: 100%;
+            }
+
+            #section-txt-second p {
+                position: relative;
+                font-size: 20px;
+                text-align: center;
+                top: 100px;
+                width: 58%;
+                left: 21%;
+            }
+
+            #section-txt-third {
+                background-color:#F5F5F5;
+                height: 400px;
+                margin: -10px 0 0 0;
+                width: 100%;
+                max-width: 1920px;
+                position: relative;
+                -webkie-box-shadow: 0 0 50px rgba(0,0,0,0.8);
+                box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            }
+
+            #section-txt-third h2 {
+                position: relative;
+                text-align: center;
+                top: 60px;
+                width: 100%;
+            }
+
+            #section-txt-third p {
+                position: relative;
+                font-size: 20px;
+                text-align: center;
+                top: 100px;
+                width: 58%;
+                left: 21%;
+            }
+
+            #section-txt-third div {
+                position: relative;
+                text-align: center;
+                top: 120px;
+                width: 30%;
+                left: 35%;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="brand" href="{% url 'ej:home' %}"><strong>Ejub</strong></a>
+
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li><a href="{% url 'ej:courses' %}">Courses</a></li>
+                            <li><a href="{% url 'ej:skills' %}">Skills</a></li>
+                            <li><a href="{% url 'ej:jobs' %}">Jobs</a></li>
+                        </ul>
+                        <ul class="nav pull-right">
+                            <li><a href="{% url 'ej:about' %}">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <section id="section-img-first" data-type="background" data-speed="10">
+            <h2 style="color: white;">Ejub. From education to job.</h2>
+            </section>
+            <section id="section-txt-first" data-type="background" data-speed="10">
+            <h2>What is Ejub?</h2>
+            <p>From education to job. We try to dig into the link between the courses taught in school and the jobs to be filled in the industry using quantitave methods. </p>
+            </section>
+            <section id="section-img-second" data-type="background" data-speed="10">
+            <h2 style="color: white;">Bridge the gap between what education provides and what industry demands</h2>
+            </section>
+
+            <section id="section-txt-second" data-type="background" data-speed="10">
+            <h2>How does it work?</h2>
+            <p><a href="{% url 'ej:courses' %}">Search for a class</a> before you enroll. Ejub tells you what skills are taught in the class and what jobs are related to the skills.</p> 
+            <p><a href="{% url 'ej:jobs' %}">Search for your ideal job</a> to see what class you should take to prepare for it.</p>
+            </section>
+
+<section id="section-img-third" data-type="background" data-speed="10">
+<h2>Prepare students early for their future.</h2>
+            </section>
+ 
+            <section id="section-txt-third" data-type="background" data-speed="10">
+            <h2>More to expect. Soon.</h2>
+            <p>We could plot the most demanded skills over time to see if there's any interesting patterns. We could add suggestions for internships in addition to full-time jobs. We could also get feedbacks from graduates on their experience of education to jobs...There is a UNIVERSE of interesting things we could do.</p>
+            <br />
+            <p>Get started now by:</p>
+            <div>
+                <a class="btn btn-primary" style="display:inline; float:left" href="{% url 'ej:courses' %}">Search courses</a>
+                <a class="btn btn-primary" style="display:inline; float:right" href="{% url 'ej:jobs' %}">Search jobs</a>
+            </div> 
+            </section>
+
+   
+        <footer>
+        <div class="container">
+            <p>&copy; Ejub: from education to jobs.</p>
+        </div>
+        </footer>
+        <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/ej-ajax.js' %}"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                    $('section[data-type="background"]').each(function() {
+                        var $bgobj = $(this);
+                        $(window).scroll(function() {
+                            var yPos = -($(this).scrollTop() / $bgobj.data('speed'));
+                            // Put together our final background position
+                            var coords = '50% ' + yPos + 'px';
+
+                            //Move the background
+                            $bgobj.css({backgroundPosition: coords});
+                            });
+                        });
+                    });
+                </script>
+            </body>
+        </html>
+

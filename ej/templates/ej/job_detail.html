@@ -1,49 +1,69 @@
 {% extends 'ej/base.html' %}
 {% block body %}
+
 <div class="container-fluid">
-    {% if job %}
-    <h2>{{ job.title }}</h2>
     <div class="row-fluid">
-        <div class="span4">
-            <h4>Job information</h4>
-            <ul>
-                <li>Company: {{ job.company }}</li>
-                <li>Industry: {{ job.industry }}</li>
-                <li>Functions: {{ job.functions }}</li>
-                {% if job.city %}
-                <li>Location: {{ job.city }}, {{ job.country }}</li>
+        <div class="span10">
+
+            <div class="container-fluid">
+                {% if job %}
+                <h2>{{ job.title }}</h2>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <h4>Job information</h4>
+                        <ul>
+                            <li>Company: {{ job.company }}</li>
+                            <li>Industry: {{ job.industry }}</li>
+                            <li>Functions: {{ job.functions }}</li>
+                            {% if job.city %}
+                            <li>Location: {{ job.city }}, {{ job.country }}</li>
+                            {% else %}
+                            <li>Location: {{ job.country }}</li>
+                            {% endif %}
+                            <li>Experience: {{ job.experience }}</li>
+                            <li>Posted: {{ job.posted }}</li>
+                            <li>Description: {{ job.description }}</li>
+                            <li>Requirements: {{ job.skills }}</li>
+                        </ul>
+                    </div>
+
+                    <div class="span4">
+                        <h4 class="job-required-skills">Skills</h4>
+                        <ul>
+                            {% for skill in job.skillsLists.all %}
+                            <li skill_id={{ skill.id }} class="job-required-skills">{{ skill.skill }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div id="job-related-courses" class="span4">
+                        <h4 id="job-related-courses-header">All related courses</h4>
+                        {% if related_courses %}
+                        <ul>
+                            {% for course in related_courses %}
+                            <li><a href="{% url 'ej:course_detail' course.id %}">{{ course.coursetitle }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
                 {% else %}
-                <li>Location: {{ job.country }}</li>
+                <strong>Error retrieving the job.</strong>
                 {% endif %}
-                <li>Experience: {{ job.experience }}</li>
-                <li>Posted: {{ job.posted }}</li>
-                <li>Description: {{ job.description }}</li>
-                <li>Requirements: {{ job.skills }}</li>
-            </ul>
+            </div>
+
         </div>
 
-        <div class="span4">
-            <h4 class="job-required-skills">Skills</h4>
-            <ul>
-                {% for skill in job.skillsLists.all %}
-                <li skill_id={{ skill.id }} class="job-required-skills">{{ skill.skill }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <div id="job-related-courses" class="span4">
-            <h4 id="job-related-courses-header">All related courses</h4>
-            {% if related_courses %}
-            <ul>
-                {% for course in related_courses %}
-                <li><a href="{% url 'ej:course_detail' course.id %}">{{ course.coursetitle }}</a></li>
-                {% endfor %}
-            </ul>
-            {% endif %}
+        <div class="span2">
+            <div id="quick-ref" class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Get started</li>
+                    <a href="{% url 'ej:courses' %}">Search courses</a>
+                    <br />
+                    <a href="{% url 'ej:jobs' %}">Search jobs</a>
+                </ul>
+            </div>
         </div>
     </div>
-    {% else %}
-    <strong>Error retrieving the job.</strong>
-    {% endif %}
 </div>
 {% endblock %}

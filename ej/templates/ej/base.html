@@ -19,16 +19,21 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="brand" href="{% url 'ej:home' %}">Ejub</a>
+                        <a class="brand" href="{% url 'ej:home' %}"><strong>Ejub</strong></a>
 
                         <div class="nav-collapse collapse">
                             <ul class="nav">
-                                <li><a href="{% url 'ej:courses' %}">Courses</a></li>
-                                <li><a href="{% url 'ej:skills' %}">Skills</a></li>
-                                <li><a href="{% url 'ej:jobs' %}">Jobs</a></li>
+                                <li><a href="{% url 'ej:courses' %}"><strong>Courses</strong></a></li>
+                                <li><a href="{% url 'ej:skills' %}"><strong>Skills</strong></a></li>
+                                <li><a href="{% url 'ej:jobs' %}"><strong>Jobs</strong></a></li>
                             </ul>
                             <ul class="nav pull-right">
-                                <li><a href="{% url 'ej:about' %}">About</a></li>
+                                {% if request.user.is_authenticated %}
+                                <li><a href="{% url 'account_logout' %}">Sign out</a></li>
+                                {% else %}
+                                <li><a href="{% url 'account_login' %}">Register/Sign in</a></li>
+                                {% endif %}
+                                <li><a href="{% url 'ej:about' %}"><strong>About</strong></a></li>
                             </ul>
                         </div>
                     </div>
@@ -37,25 +42,8 @@
 
 
         <div id="wrapper">
-            <div class="container-fluid">
-                <div class="row-fluid">
-                    <div class="span10">
-                        {% block body %}{% endblock %}
-                    </div>
-
-                    <div class="span2">
-                        <div id="quick-ref" class="well sidebar-nav">
-                            <ul class="nav nav-list">
-                                <li class="nav-header">Get started</li>
-                                <a href="{% url 'ej:courses' %}">Search courses</a>
-                                <br />
-                                <a href="{% url 'ej:jobs' %}">Search jobs</a>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            {% block body %}{% endblock %}
+       </div>
 
         <footer>
             <hr/>

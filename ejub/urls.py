@@ -11,5 +11,6 @@ urlpatterns = patterns('',
     url(r'^$', RedirectView.as_view(url='/ej/')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^ej/', include('ej.urls', namespace = 'ej')),
+    url(r'^accounts/', include('allauth.urls')),
 )
 

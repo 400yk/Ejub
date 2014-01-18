@@ -14,6 +14,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # STATIC_ROOT = os.path.join(BASE_DIR, 'ej/static').replace('\\','/')
 STATIC_ROOT = os.path.join(BASE_DIR, '../../ejub_static').replace('\\','/')
 
+# SITE_ID: 3 is development, 2 is production
+SITE_ID = 2
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -24,6 +27,38 @@ SECRET_KEY = 'v*089on$q#wm3h*f=m=yi8c-r3wa!gl-o8fvdo!&)^w42^_x=9'
 DEBUG = False
 
 TEMPLATE_DEBUG = True
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    # Required by allauth template tags
+    "django.core.context_processors.request",
+    'django.contrib.auth.context_processors.auth',
+
+    # allauth specific context processors
+    "allauth.account.context_processors.account",
+    "allauth.socialaccount.context_processors.socialaccount",
+    )
+
+LOGIN_REDIRECT_URL = '/'
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_PROVIDERS = {
+        'facebook': {
+            'SCOPE': ['email', 'publish_stream'],
+            'METHOD': 'js_sdk'
+            }
+        }
+
+SOCIALACCOUNT_PROVIDERS['linkedin'] = {
+            'SCOPE': ['r_emailaddress'],
+            'PROFILE_FIELDS': ['id','first-name','last-name','email-address','picture-url','public-profile-url']}
+
+AUTHENTICATION_BACKENDS = (
+        # Needed to login by username in Django admin, regardless of 'allauth'
+        "django.contrib.auth.backends.ModelBackend",
+
+        # 'allauth' specific authentication methods, such as login by e-mail
+        "allauth.account.auth_backends.AuthenticationBackend",
+        )
+
 
 # This is a production setting
 ALLOWED_HOSTS = [
@@ -46,6 +81,15 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'ej',
+
+    # The Django sites framework is required
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.linkedin',
 )
 
 MIDDLEWARE_CLASSES = (

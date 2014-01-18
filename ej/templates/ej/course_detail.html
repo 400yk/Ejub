@@ -1,75 +1,95 @@
 {% extends 'ej/base.html' %}
 {% load static %}
 {% block body %}
+
 <div class="container-fluid">
-    {% if course %}
-    <h2>{{ course.coursetitle }}</h2>
     <div class="row-fluid">
-        <div id="div-course-detail" course_id="{{ course.id }}" class="span4">
-            <h4>Course information</h4>
-            <ul>
-                <li>Department: {{ course.departmentcode }}</li>
-                <li>Course Number: {{ course.coursenumber }}</li>
-                <li>Upper Units: {{ course.upperunits }}</li>
-                <li>Lower Units: {{ course.lowerunits }}</li>
-                <li>Course Description: {{ course.coursedescription }}</li>
-            </ul>
-        </div>
+        <div class="span10">
 
-        <div class="span3">
-            <h4>Skills</h4>
-            <ul>
-                {% for skill in course.skillsLists.all %}
-                <li class="course-detail-each-skill" skillid="{{ skill.id }}">{{ skill.skill }}</li>
-                {% endfor %}
-            </ul>
-            <div id="other-skills-needed">
-            </div>
-        </div>
+            <div class="container-fluid">
+                {% if course %}
+                <h2>{{ course.coursetitle }}</h2>
+                <div class="row-fluid">
+                    <div id="div-course-detail" course_id="{{ course.id }}" class="span4">
+                        <h4>Course information</h4>
+                        <ul>
+                            <li>Department: {{ course.departmentcode }}</li>
+                            <li>Course Number: {{ course.coursenumber }}</li>
+                            <li>Upper Units: {{ course.upperunits }}</li>
+                            <li>Lower Units: {{ course.lowerunits }}</li>
+                            <li>Course Description: {{ course.coursedescription }}</li>
+                        </ul>
+                    </div>
 
-        <div class="span5">
-            <div id="course-related-jobs">
-                {% if related_jobs %}
-                <table id="related-jobs-table">
-                    <thead>
-                        <tr>
-                            <th><h5>Job title</h5></th>
-                            <th><h5>Company</h5></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for job in related_jobs %}
-                        <tr>
-                            <td>
-                                <a href="http://www.linkedin.com/jobs2/view/{{ job.job_id }}/"><img src="{% static 'img/linkedin.jpg' %}" height="15" width="15" style="display:inline; float:left" /></a>
-                                <div class="related-jobs-list" jobid="{{ job.job_id }}"><a href="{% url 'ej:job_detail' job.id %}">&nbsp;{{ job.title }}</a></div>
-                            </td>
-                            <td>
-                                <div>{{ job.company }}</div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                    <div class="span3">
+                        <h4>Skills</h4>
+                        <ul>
+                            {% for skill in course.skillsLists.all %}
+                            <li class="course-detail-each-skill" skillid="{{ skill.id }}">{{ skill.skill }}</li>
+                            {% endfor %}
+                        </ul>
+                        <div id="other-skills-needed">
+                        </div>
+                    </div>
+
+                    <div class="span5">
+                        <div id="course-related-jobs">
+                            {% if related_jobs %}
+                            <table id="related-jobs-table">
+                                <thead>
+                                    <tr>
+                                        <th><h5>Job title</h5></th>
+                                        <th><h5>Company</h5></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for job in related_jobs %}
+                                    <tr>
+                                        <td>
+                                            <a href="http://www.linkedin.com/jobs2/view/{{ job.job_id }}/"><img src="{% static 'img/linkedin.jpg' %}" height="15" width="15" style="display:inline; float:left" /></a>
+                                            <div class="related-jobs-list" jobid="{{ job.job_id }}"><a href="{% url 'ej:job_detail' job.id %}">&nbsp;{{ job.title }}</a></div>
+                                        </td>
+                                        <td>
+                                            <div>{{ job.company }}</div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endif %}
+                        </div>
+                        <div class="related-jobs-filter-labels">
+                            <div id="selected-filter-related-jobs"> 
+                                <span class="label label-primary selected-related-jobs-filter" id="selected-filter-industry" course-id="{{ course.id }}" thefield="industry" style="display:none"></span>
+                                <span class="label label-info selected-related-jobs-filter" id="selected-filter-company" course-id="{{ course.id }}" thefield="company" style="display:none"></span>
+                                <span class="label label-success selected-related-jobs-filter" id="selected-filter-functions" course-id="{{ course.id }}" thefield="functions" style="display:none"></span>
+                                <span class="label label-warning selected-related-jobs-filter" id="selected-filter-experience" course-id="{{ course.id }}" thefield="experience" style="display:none"></span>
+                                <span class="label label-danger selected-related-jobs-filter" id="selected-filter-country" course-id="{{ course.id }}" thefield="country" style="display:none"></span>
+                                <span class="label label-default selected-related-jobs-filter"  id="selected-filter-posted" course-id="{{ course.id }}" thefield="posted" style="display:none"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <strong>Error retrieving the course.</strong>
                 {% endif %}
             </div>
-            <div class="related-jobs-filter-labels">
-                <div id="selected-filter-related-jobs"> 
-                    <span class="label label-primary selected-related-jobs-filter" id="selected-filter-industry" course-id="{{ course.id }}" thefield="industry" style="display:none"></span>
-                    <span class="label label-info selected-related-jobs-filter" id="selected-filter-company" course-id="{{ course.id }}" thefield="company" style="display:none"></span>
-                    <span class="label label-success selected-related-jobs-filter" id="selected-filter-functions" course-id="{{ course.id }}" thefield="functions" style="display:none"></span>
-                    <span class="label label-warning selected-related-jobs-filter" id="selected-filter-experience" course-id="{{ course.id }}" thefield="experience" style="display:none"></span>
-                    <span class="label label-danger selected-related-jobs-filter" id="selected-filter-country" course-id="{{ course.id }}" thefield="country" style="display:none"></span>
-                    <span class="label label-default selected-related-jobs-filter"  id="selected-filter-posted" course-id="{{ course.id }}" thefield="posted" style="display:none"></span>
-                </div>
+            <script type="text/javascript" src="{% static 'js/ej-ajax-courses.js' %}"></script>
+            <script type="text/javascript" src="{% static 'js/ej-ajax-highlight-skills-course-detail.js' %}"></script>
 
+        </div>
+
+        <div class="span2">
+            <div id="quick-ref" class="well sidebar-nav">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Get started</li>
+                    <a href="{% url 'ej:courses' %}">Search courses</a>
+                    <br />
+                    <a href="{% url 'ej:jobs' %}">Search jobs</a>
+                </ul>
             </div>
         </div>
     </div>
-    {% else %}
-    <strong>Error retrieving the course.</strong>
-    {% endif %}
 </div>
-<script type="text/javascript" src="{% static 'js/ej-ajax-courses.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/ej-ajax-highlight-skills-course-detail.js' %}"></script>
 {% endblock %}
